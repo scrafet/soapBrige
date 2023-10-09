@@ -62,3 +62,4 @@ afiliado.msg_confidencial = responseAfiliado.MsgConfidencial
 
 print(afiliado.resultado)
 
+# https://www.mytecbits.com/internet/python/execute-sql-server-stored-procedure
