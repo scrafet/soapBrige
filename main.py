@@ -1,28 +1,41 @@
-import requests
+from suds import client
 
-def get_session(usuario, clave):
-    # Crea la solicitud HTTP
-    headers = {"Content-Type": "application/x-www-form-urlencoded"}
-    data = {"usuario": usuario, "clave": clave}
+client = client.Client('http://pruebaapp.sis.gob.pe/sisWSAFI/Service.asmx?WSDL')
 
-    # Realiza la solicitud
-    response = requests.post("http://pruebaapp.sis.gob.pe/sisWSAFI/Service.asmx/GetSession", headers=headers, data=data)
+response = client.service.GetSession('00003543', '123456')
 
-    # Verifica el código de respuesta
-    if response.status_code == 200:
-        # Devuelve la respuesta del servicio
-        return response.json()
-    else:
-        # Imprime el error
-        print(response.text)
+sessionId = response
 
-# Obtiene la respuesta del servicio
-response = get_session("00003543", "123456")
+print(sessionId)
 
-# Verifica la respuesta
-if response:
-    # La respuesta es válida
-    print(response["token"])
+# Obtiene el tipo de consulta
+intOpcion = input("Ingrese tipo de consulta")
+
+# Obtiene el tipo de documento del afiliado.
+tipoDocumento = input("Ingrese tipo de documento")
+
+# Obtiene el número de documento del afiliado.
+nroDocumento = input("Ingrese el dni")
+
+#  número de documento de seguridad.
+Dni = 44790320
+
+# Llama al método ConsultarAfiliadoFuaE.
+responseAfiliado = client.service.ConsultarAfiliadoFuaE(intOpcion, sessionId, Dni, nroDocumento)
+
+# Obtiene el afiliado de la respuesta.
+afiliado = responseAfiliado
+
+
+
+print('This statement is always executed')
+
+
+if afiliado.IdError=0:
+    # block of code if condition is True
+    # Imprime los datos del afiliado.
+    print(afiliado)
+
 else:
-    # La respuesta no es válida
-    print("La respuesta no es válida")
+    # block of code if condition is False
+    print(afiliado.Resultado)
