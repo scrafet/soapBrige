@@ -11,19 +11,36 @@ sessionId = response
 print(sessionId)
 
 # Obtiene el tipo de consulta
-intOpcion = int(input("Ingrese tipo de consulta : "))
-
-# Obtiene el tipo de documento del afiliado.
-tipoDocumento = str(input("Ingrese tipo de documento : "))
-
-# Obtiene el número de documento del afiliado.
-nroDocumento = str(input("Ingrese el dni : "))
+# intOpcion = int(input("Ingrese tipo de consulta : "))
 
 #  número de documento de seguridad.
 Dni = "44790320"
 
-# Llama al método ConsultarAfiliadoFuaE.
-responseAfiliado = client.service.ConsultarAfiliadoFuaE(intOpcion, sessionId, Dni, tipoDocumento, nroDocumento)
+try:
+    # Obtiene el tipo de consulta
+    intOpcion = int(input("Ingrese tipo de consulta : "))
+
+    if intOpcion == 1:
+
+        # Obtiene el tipo de documento del afiliado.
+        tipoDocumento = str(input("Ingrese tipo de documento : "))
+
+        # Obtiene el número de documento del afiliado.
+        nroDocumento = str(input("Ingrese el numero de documento : "))
+
+        # Llama al método ConsultarAfiliadoFuaE.
+        responseAfiliado = client.service.ConsultarAfiliadoFuaE(intOpcion, sessionId, Dni, tipoDocumento, nroDocumento)
+
+    elif intOpcion == 2:
+
+        # Obtiene el número de contrato del afiliado.
+        nroContrato = str(input("Ingrese el Numero de contrato : "))
+
+        # Llama al método ConsultarAfiliadoFuaE.
+        responseAfiliado = client.service.ConsultarAfiliadoFuaE(intOpcion, sessionId, Dni, nroContrato)
+
+except ValueError:
+    print("El valor introducido no es aceptado")
 
 # Obtiene el afiliado de la respuesta.
 afiliado = Models.Afiliado
@@ -59,7 +76,25 @@ afiliado.id_plan = responseAfiliado.IdPlan
 afiliado.id_grupo_poblacional = responseAfiliado.IdGrupoPoblacional
 afiliado.msg_confidencial = responseAfiliado.MsgConfidencial
 
+try:
 
-print(afiliado.resultado)
+    if afiliado.nro_contrato is not None:
+
+        # imprimir afiliado   -- aqui agregar el codigo para ejecutar el SP
+        Models.Afiliado.imprimir(afiliado)
+
+    else:
+
+        # imprimir el error
+        print(afiliado.resultado)
+
+except ValueError:
+    print("El valor del error no es un número")
+
+# Str
+# print(afiliado.imprimir())
+
+# repr
+# print(repr(afiliado))
 
 # https://www.mytecbits.com/internet/python/execute-sql-server-stored-procedure
