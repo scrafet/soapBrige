@@ -44,7 +44,7 @@ MSSQL = {
         'NAME': 'SIGH_Externa',
         'USER': 'sa',
         'PASSWORD': 'Password123.',
-        'HOST': 'aca el nombre',
+        'HOST': 'aca el nombre ',
         'PORT': '1433',
         'OPTIONS': {'driver': 'ODBC Driver 17 for SQL Server',
                     },

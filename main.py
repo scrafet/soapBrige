@@ -33,11 +33,14 @@ try:
 
     elif intOpcion == 2:
 
+        # Obtiene el Tipo de Formato del afiliado.
+        tipoFormato = str(input("Ingrese el Tipo de Formato : "))
+
         # Obtiene el número de contrato del afiliado.
         nroContrato = str(input("Ingrese el Numero de contrato : "))
 
         # Llama al método ConsultarAfiliadoFuaE.
-        responseAfiliado = client.service.ConsultarAfiliadoFuaE(intOpcion, sessionId, Dni, nroContrato)
+        responseAfiliado = client.service.ConsultarAfiliadoFuaE(intOpcion, sessionId, Dni, tipoFormato, nroContrato)
 
 except ValueError:
     print("El valor introducido no es aceptado")
@@ -95,6 +98,6 @@ except ValueError:
 # print(afiliado.imprimir())
 
 # repr
-# print(repr(afiliado))
+# print(repr(afiliado.__repr__(self=)))
 
 # https://www.mytecbits.com/internet/python/execute-sql-server-stored-procedure
